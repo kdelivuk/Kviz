@@ -30,9 +30,6 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
     var kvizParse : KvizModel = KvizModel()
     var pitanja : [PitanjeModel] = [PitanjeModel]()
 
-    
-    // Testiranje
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,17 +39,47 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
         
         self.tableView.rowHeight = 70
         
-        var pozadinaSlika = UIImage(named: "pozadina.jpg")
-        var imageView = UIImageView(frame: self.view.bounds)
-        imageView.image = pozadinaSlika
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-        
         kvizovi = DohvatiKvizove()
         
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return kvizovi.count
+    }
+    
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("KvizCell", forIndexPath: indexPath) as! UITableViewCell
+        
+        if (indexPath.row % 2 == 0) {
+            self.tableView.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.textLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+        } else {
+            self.tableView.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+            cell.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.9)
+            cell.textLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+            
+        }
 
+        cell.textLabel!.text = kvizovi[indexPath.row].naziv
+        cell.detailTextLabel!.text = kvizovi[indexPath.row].opis
+        
+        return cell
+    }
+
+    
+    // Custom functions
     
     func DodajNoviKviz(tmpKviz : KvizModel) {
         
@@ -69,7 +96,7 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
             parser.delegate = self
             parser.parse()
             
-
+            
             kvizParse.svaPitanja = pitanja
             
             SpremiKviz(kvizParse)
@@ -77,16 +104,13 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
             tableView.reloadData()
             
         } else {
-            
+            //generirat prazan kviz
             SpremiKviz(kvizParse)
             tableView.reloadData()
-            //generirat prazan kviz
             
         }
     }
-    
 
-    
     func SpremiKviz(kvizModel : KvizModel) {
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -112,8 +136,6 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
             pitanjeCoreData.odgDva = tmpPitanje.odgDva
             pitanjeCoreData.odgTri = tmpPitanje.odgTri
             pitanjeCoreData.odgTocan = tmpPitanje.tocanOdgovor
-
-            println(pitanjeCoreData.odgTocan)
             
             pitanjaNS.addObject(pitanjeCoreData)
             
@@ -169,9 +191,6 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
                 var pitanjaModeli : [PitanjeModel] = [PitanjeModel]()
                 
                 for pitanjeTemp in kvizTemp.svaPitanja {
-                    
-                    
-                    println(pitanjeTemp.valueForKey("odgTocan"))
                     
                     var pitanjee : PitanjeModel = PitanjeModel(pitanje: pitanjeTemp.valueForKey("pitanje") as! String, odgJedan: pitanjeTemp.valueForKey("odgJedan") as! String, odgDva: pitanjeTemp.valueForKey("odgDva") as! String, odgTri: pitanjeTemp.valueForKey("odgTri") as! String, tocanOdgovor: pitanjeTemp.valueForKey("odgTocan") as! String)
                 
@@ -261,80 +280,8 @@ class UnosKvizaTableViewController: UITableViewController , NSXMLParserDelegate 
 
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return kvizovi.count
-    }
-
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("KvizCell", forIndexPath: indexPath) as! UITableViewCell
-        
-        cell.backgroundColor = UIColor.clearColor()
-
-
-        // cell.textLabel?.text = pitanjaXML.objectAtIndex(indexPath.row).valueForKey("tekst_pitanja") as? String
-        cell.textLabel?.text = kvizovi[indexPath.row].naziv
-        cell.detailTextLabel?.text = kvizovi[indexPath.row].opis
-        
-        return cell
-    }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     @IBAction func dohvatiNoviKviz(segue : UIStoryboardSegue){}
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if (segue.identifier == "KvizPitanjeSegue") {

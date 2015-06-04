@@ -11,6 +11,7 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
 
+    @IBOutlet weak var labelKvizPodnaslov: UILabel!
     @IBOutlet weak var labelKvizNaslov: UILabel!
     @IBOutlet weak var buttonNovaIgra: UIButton!
     @IBOutlet weak var buttonUnosKviza: UIButton!
@@ -21,39 +22,40 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Background
-        
-        var pozadinaSlika = UIImage(named: "pozadina.jpg")
-        var imageView = UIImageView(frame: self.view.bounds)
-        imageView.image = pozadinaSlika
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
+        self.labelKvizNaslov.alpha = 0
+        self.labelKvizPodnaslov.alpha = 0
         
         // Button styles
-        
+       stilizirajGumb(buttonNovaIgra)  
         stilizirajGumb(buttonUnosKviza)
-        stilizirajGumb(buttonNovaIgra)
+       
     }
     
-
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-        self.labelKvizNaslov.alpha = 0.0
+    override func viewWillAppear(animated: Bool) {
+        
+        // Start position
         
         self.buttonNovaIgra.center.x -= self.view.center.x * 2
-        self.buttonUnosKviza.center.x -= self.view.center.x * 2
+        self.buttonUnosKviza.center.x += self.view.center.x * 2
+        self.labelKvizPodnaslov.center.y -= 167
+        self.labelKvizNaslov.center.y -= 167
         
-        labelKvizNaslov.textColor = UIColor.redColor()
-   
-
         // Animations
         
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: {
+        UIView.animateWithDuration(0.5, delay: 0.9, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: {
             
-            self.labelKvizNaslov.alpha = 1.0
+            self.labelKvizPodnaslov.center.y += 167
+
+            self.labelKvizPodnaslov.alpha = 1
+            
+            }, completion: nil)
+        
+        UIView.animateWithDuration(1, delay: 1.3, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.1, options: nil, animations: {
+
+            self.labelKvizNaslov.center.y += 167
+            
+            self.labelKvizNaslov.alpha = 1
+
             
             }, completion: nil)
         
@@ -65,32 +67,22 @@ class MainMenuViewController: UIViewController {
         
         UIView.animateWithDuration(0.5, delay: 0.7, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: {
             
-            self.buttonUnosKviza.center.x += self.view.center.x * 2
+            self.buttonUnosKviza.center.x -= self.view.center.x * 2
             
             } , completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    
+    // Custom functions
     
     func stilizirajGumb (objectname : UIButton) {
-    
-        objectname.backgroundColor = UIColor.clearColor()
-        objectname.layer.cornerRadius = 3
-
-
+        objectname.layer.shadowColor = UIColor.blackColor().CGColor
+        objectname.layer.shadowOffset = CGSizeMake(2, 2)
+        objectname.layer.shadowRadius = 2
+        objectname.layer.shadowOpacity = 0.5
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

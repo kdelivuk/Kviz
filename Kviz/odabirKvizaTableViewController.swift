@@ -55,15 +55,9 @@ class odabirKvizaTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        kvizovi = DohvatiKvizove()
+        self.tableView.rowHeight = 70
         
-        var pozadinaSlika = UIImage(named: "pozadina.jpg")
-        var imageView = UIImageView(frame: self.view.bounds)
-        imageView.image = pozadinaSlika
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-
+        kvizovi = DohvatiKvizove()
 
     }
 
@@ -83,7 +77,18 @@ class odabirKvizaTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("OdabirKvizaCell", forIndexPath: indexPath) as! UITableViewCell
         
-        cell.backgroundColor = UIColor.clearColor()
+        if (indexPath.row % 2 == 0) {
+            self.tableView.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.textLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 1.0)
+        } else {
+            self.tableView.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+            cell.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.9)
+            cell.textLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 171/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.8)
+
+        }
 
         
         // cell.textLabel?.text = pitanjaXML.objectAtIndex(indexPath.row).valueForKey("tekst_pitanja") as? String

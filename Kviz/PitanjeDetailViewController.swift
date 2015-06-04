@@ -20,19 +20,12 @@ class PitanjeDetailViewController: UIViewController {
     @IBOutlet weak var textOdgDva: UILabel!
     @IBOutlet weak var textOdgTri: UILabel!
     @IBOutlet weak var textOdgTocan: UILabel!
+    @IBOutlet weak var buttonPovratak: UIButton!
     
     @IBOutlet var viewPitanjeDetail: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var pozadinaSlika = UIImage(named: "pozadina.jpg")
-        var imageView = UIImageView(frame: self.view.bounds)
-        imageView.image = pozadinaSlika
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-        
         
         // Load odgovora
         
@@ -58,9 +51,7 @@ class PitanjeDetailViewController: UIViewController {
     }
     
     func stilizirajLabelu ( labela : UILabel) {
-        labela.textColor = UIColor.redColor()
         labela.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
-
     }
     
 

@@ -16,19 +16,7 @@ class KvizRjesenjaTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var pozadinaSlika = UIImage(named: "pozadina.jpg")
-        var imageView = UIImageView(frame: self.view.bounds)
-        imageView.image = pozadinaSlika
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-        
-        for i in 0..<pitanja.count {
-            println(pitanja[i].pitanje)
-            println(pitanja[i].tocanOdgovor)
-            println(trenutniOdgovori[i])
-        }
-        
+        self.tableView.rowHeight = 70
         tableView.reloadData()
 
 
@@ -58,10 +46,15 @@ class KvizRjesenjaTableViewController: UITableViewController {
 
         // Configure the cell...
         if (pitanja[indexPath.row].tocanOdgovor.toInt() == trenutniOdgovori[indexPath.row]){
-            cell.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.5)
+            self.tableView.backgroundColor = UIColor(red: 138/255.0, green: 230/255.0, blue: 138/255.0, alpha: 1.0)
+            cell.backgroundColor = UIColor(red: 138/255.0, green: 230/255.0, blue: 138/255.0, alpha: 1.0)
+            cell.textLabel!.backgroundColor = UIColor(red: 138/255.0, green: 230/255.0, blue: 138/255.0, alpha: 1.0)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 138/255.0, green: 230/255.0, blue: 138/255.0, alpha: 1.0)
         } else {
-            cell.backgroundColor = UIColor.redColor()
-
+            self.tableView.backgroundColor = UIColor(red: 255/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+            cell.backgroundColor = UIColor(red: 255/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+            cell.textLabel!.backgroundColor = UIColor(red: 255/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+            cell.detailTextLabel!.backgroundColor = UIColor(red: 255/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
         }
 
         return cell

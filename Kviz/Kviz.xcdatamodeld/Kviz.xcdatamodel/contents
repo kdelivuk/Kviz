@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Kviz" representedClassName="Kviz.Kviz" syncable="YES">
+        <attribute name="naziv" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opis" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="svaPitanja" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pitanje" inverseName="kvizPitanja" inverseEntity="Pitanje" syncable="YES"/>
+    </entity>
+    <entity name="Pitanje" representedClassName="Kviz.Pitanje" syncable="YES">
+        <attribute name="odgDva" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="odgJedan" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="odgTocan" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="odgTri" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pitanje" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="kvizPitanja" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Kviz" inverseName="svaPitanja" inverseEntity="Kviz" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Kviz" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Pitanje" positionX="-54" positionY="18" width="128" height="135"/>
+    </elements>
+</model>
